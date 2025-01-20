@@ -5,16 +5,16 @@ const pdfParse = require('pdf-parse');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const uuid = require('uuid');
-const serviceAccount = require("C:/Users/hp/keys/resume-67dd4-firebase-adminsdk-fbsvc-7056bc8ade.json"); 
+// const serviceAccount = require("C:/Users/hp/keys/resume-67dd4-firebase-adminsdk-fbsvc-7056bc8ade.json"); 
 
-//this is only needed for local testing
+//this is only needed for local testing 
+
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  // credential: admin.credential.cert(serviceAccount),
   storageBucket: 'gs://resume-67dd4.firebasestorage.app'  
 });
 
-//this for cloud run 
-// admin.initializeApp();
+
 
 const db = admin.firestore();
 const bucket = admin.storage().bucket();
@@ -172,7 +172,7 @@ app.post('/scrape-job-post', async (req, res) => {
   }
 });
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
