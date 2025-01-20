@@ -172,8 +172,7 @@ app.post('/scrape-job-post', async (req, res) => {
   }
 });
 
-// Start the Express server
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
