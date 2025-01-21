@@ -17,7 +17,7 @@ app.use('/api', uploadResume);
 
 
 app.get('/', async (req, res)=>{
-  return res.status(200).send("halo");
+  return res.status(200).send(`Node.js version: ${process.version}`);
 });
 
 
