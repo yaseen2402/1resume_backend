@@ -1,0 +1,146 @@
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
+const path = require('path');
+const fs = require('fs');
+
+// Add stealth and adblocker plugins
+puppeteer.use(StealthPlugin());
+puppeteer.use(AdblockerPlugin({ blockTrackers: true }));
+
+// Sleep function using Promise
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function scrapeSeekWebsite(url, browser) {
+    const page = await browser.newPage();
+    
+    // Set reasonable timeouts
+    page.setDefaultTimeout(30000);
+    page.setDefaultNavigationTimeout(30000);
+    
+    // Create output directory
+    const outputDir = path.join(__dirname, 'scrap_output');
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir);
+    }
+
+    const timestamp = Date.now();
+
+    console.log(`Navigating to: ${url}`);
+    await page.goto(url, { 
+      waitUntil: 'networkidle0', 
+      timeout: 30000 
+    });
+
+    const pageTitle = await page.title();
+    if (pageTitle === 'Just a moment...') {
+      throw new Error('Encountered "Just a moment..." page, likely a CAPTCHA or bot detection.');
+    }
+
+    const pageData = {
+      page: {
+        title: await page.title(),
+        url: await page.url()
+      },
+      banner: null,
+      icon: null,
+      jobTitle: null,
+      company: null,
+      viewAllJobsUrl: null,
+      location: null,
+      jobType: null,
+      payRate: null,
+      postedTime: null,
+      jobDescription: null,
+      content: {
+        headings: {},
+        text: '',
+        links: [],
+        images: []
+      }
+    };
+
+    // Safe evaluation with error handling
+    for (const level of ['h1', 'h2', 'h3']) {
+      try {
+        pageData.content.headings[level] = await page.$$eval(
+          level,
+          els => els.map(e => e.textContent.trim())
+        );
+      } catch (error) {
+        console.warn(`Failed to extract ${level} headings:`, error.message);
+        pageData.content.headings[level] = [];
+      }
+    }
+    
+    try {
+      pageData.banner = await page.$eval('[data-testid="bx-cover-image"] img', img => img.src).catch(() => null);
+      pageData.icon = await page.$eval('[data-testid="bx-logo-image"] img', img => img.src).catch(() => null);
+      pageData.jobTitle = await page.$eval('[data-automation="job-detail-title"]', el => el.textContent.trim()).catch(() => null);
+      pageData.company = await page.$eval('[data-automation="advertiser-name"]', el => el.textContent.trim()).catch(() => null);
+      pageData.viewAllJobsUrl = await page.$eval('[data-automation="job-details-header-more-jobs"]', el => el.href).catch(() => null);
+      pageData.banner = await page.$eval('[data-testid="bx-cover-image"] img', img => img.src).catch(() => null);
+      pageData.icon = await page.$eval('[data-testid="bx-logo-image"] img', img => img.src).catch(() => null);
+      pageData.jobTitle = await page.$eval('[data-automation="job-detail-title"]', el => el.textContent.trim()).catch(() => null);
+      pageData.banner = await page.$eval('[data-testid="bx-cover-image"] img', img => img.src).catch(() => null);
+      pageData.icon = await page.$eval('[data-testid="bx-logo-image"] img', img => img.src).catch(() => null);
+      pageData.jobTitle = await page.$eval('[data-automation="job-detail-title"]', el => el.textContent.trim()).catch(() => null);
+      pageData.company = await page.$eval('[data-automation="advertiser-name"]', el => el.textContent.trim()).catch(() => null);
+      pageData.viewAllJobsUrl = await page.$eval('[data-automation="job-details-header-more-jobs"]', el => el.href).catch(() => null);
+      pageData.location = await page.$eval('[data-automation="job-detail-location"] a', el => el.textContent.trim()).catch(() => null);
+      pageData.jobType = await page.$eval('[data-automation="job-detail-work-type"] a', el => el.textContent.trim()).catch(() => null);
+      pageData.payRate = await page.$eval('[data-automation="job-detail-salary"]', el => el.textContent.trim()).catch(() => null);
+      pageData.postedTime = await page.$eval('.l1r1185b.l1r118h7.l1r118gr.l1r118n.b5ip642d > span:nth-child(2)', el => el.textContent.trim()).catch(() => null);
+      pageData.jobDescription = await page.$eval('[data-automation="jobAdDetails"]', el => el.textContent.trim()).catch(() => null);
+    } catch (error) {
+      console.warn('Failed to extract job details:', error.message);
+    }
+
+    try {
+      pageData.content.text = await page.$$eval('p', ps => 
+        ps.map(p => p.textContent.trim())
+          .filter(t => t.length > 0)
+          .join('\n\n')
+      );
+    }  catch (error) {
+      console.warn('Failed to extract text content:', error.message);
+    }
+
+    try {
+      pageData.content.links = await page.$$eval('a', as => 
+        as.map(a => ({
+          text: a.textContent.trim(),
+          href: a.href
+        }))
+        .filter(l => l.text.length > 0 && l.href)
+        .slice(0, 20)
+      );
+    } catch (error) {
+      console.warn('Failed to extract links:', error.message);
+    }
+
+    try {
+      pageData.content.images = await page.$$eval('img', imgs => 
+        imgs.map(img => ({
+          description: img.alt || img.title || '',
+          src: img.src
+        }))
+        .filter(i => i.description.length > 0)
+        .slice(0, 5)
+      );
+    } catch (error) {
+      console.warn('Failed to extract images:', error.message);
+    }
+
+    // Save results
+    const outputPath = path.join(outputDir, `seek_${timestamp}.json`);
+    const { content, ...dataToSave } = pageData;
+    fs.writeFileSync(outputPath, JSON.stringify(dataToSave, null, 2));
+    
+    console.log('Scraping succeeded!');
+    console.log(`Results saved to: ${outputPath}`);
+    
+    return pageData;
+}
+
+module.exports = { scrapeSeekWebsite };
