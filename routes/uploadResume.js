@@ -67,7 +67,7 @@ router.post('/upload-resume', upload.single('file'), async (req, res) => {
     const htmlString = await convertPDFToHTML(req.file.buffer);
     console.log("got html string")
     console.log(htmlString);
-    return res.status(200).send(htmlString);
+    return res.status(200).json({ htmlContent: htmlString });
   } catch (error) {
     console.log(error.message)
     return res.status(500).send(`An error occurred: ${error.message}`);
