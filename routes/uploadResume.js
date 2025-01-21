@@ -4,7 +4,7 @@ const pdfParse = require('pdf-parse');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const uuid = require('uuid');
-const{ db, bucket } = require('../firebaseAdmin');
+const{ auth, db, bucket } = require('../firebaseAdmin');
 const router = express.Router();
 
 const upload = multer({
@@ -36,7 +36,7 @@ router.post('/upload-resume', upload.single('file'), async (req, res) => {
   }
 
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken.substring(7));  // Strip "Bearer "
+    const decodedToken = await auth.verifyIdToken(idToken.substring(7));  // Strip "Bearer "
     const userId = decodedToken.uid;
 
     // Validate PDF

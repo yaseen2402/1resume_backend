@@ -7,7 +7,8 @@ admin.initializeApp({
   storageBucket: 'gs://resume-67dd4.firebasestorage.app'  
 });
 
+const auth = admin.auth();
 const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
-module.exports = { db, bucket };
+module.exports = { auth, db, bucket };

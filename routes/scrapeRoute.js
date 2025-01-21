@@ -1,5 +1,5 @@
 const express = require('express');
-const{ db } = require('../firebaseAdmin');
+const{ auth, db } = require('../firebaseAdmin');
 const scrapeJoraWebsite = require('../scrapers/indeed_scraper');
 const scrapeSeekWebsite = require('../scrapers/jora_scraper');
 const scrapeIndeedWebsite = require('../scrapers/seek_scraper');
@@ -18,10 +18,9 @@ router.post('/scrape', async (req, res) => {
   }
 
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken.substring(7));
+    const decodedToken = await auth.verifyIdToken(idToken.substring(7));
     const userId = decodedToken.uid;
 
-    // Scrape job post data
     let pageData;
 
     if (jobPostUrl.includes('jora.com')) {
