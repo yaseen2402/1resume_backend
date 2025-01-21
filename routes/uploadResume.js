@@ -4,9 +4,9 @@ const pdfParse = require('pdf-parse');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const uuid = require('uuid');
-const{ auth, db, bucket } = require('../firebaseAdmin');
+const{ admin, auth, db, bucket } = require('../firebaseAdmin');
 const router = express.Router();
-
+const {convertPDFToHTML} = require('../helperFunctions/pdf2html');
 const upload = multer({
   limits: {
     fileSize: 10 * 1024 * 1024, // 10MB limit
@@ -63,9 +63,13 @@ router.post('/upload-resume', upload.single('file'), async (req, res) => {
       extractedText: extractedText,
       uploadedAt: admin.firestore.FieldValue.serverTimestamp(),
     });
-
-    return res.status(200).send("PDF uploaded successfully.");
+    console.log("stored in firestore")
+    const htmlString = await convertPDFToHTML(req.file.buffer);
+    console.log("got html string")
+    console.log(htmlString);
+    return res.status(200).send(htmlString);
   } catch (error) {
+    console.log(error.message)
     return res.status(500).send(`An error occurred: ${error.message}`);
   }
 });
