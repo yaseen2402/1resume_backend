@@ -1,5 +1,5 @@
 const express = require('express');
-const{ auth, db } = require('../firebaseAdmin');
+const{ admin, auth, db } = require('../firebaseAdmin');
 const scrapeJoraWebsite = require('../scrapers/indeed_scraper');
 const scrapeSeekWebsite = require('../scrapers/jora_scraper');
 const scrapeIndeedWebsite = require('../scrapers/seek_scraper');
