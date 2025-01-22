@@ -7,6 +7,8 @@ const uuid = require('uuid');
 const{ admin, auth, db, bucket } = require('../firebaseAdmin');
 const router = express.Router();
 const {convertPDFToHTML} = require('../helperFunctions/pdf2html');
+const { formatResumeContent } = require('../helperFunctions/llmService');
+
 const upload = multer({
   limits: {
     fileSize: 10 * 1024 * 1024, // 10MB limit
@@ -64,10 +66,11 @@ router.post('/upload-resume', upload.single('file'), async (req, res) => {
       uploadedAt: admin.firestore.FieldValue.serverTimestamp(),
     });
     console.log("stored in firestore")
-    const htmlString = await convertPDFToHTML(req.file.buffer);
+    // const htmlString = await convertPDFToHTML(req.file.buffer);
+    const formattedHtml = await formatResumeContent(extractedText);
     console.log("got html string")
-    console.log(htmlString);
-    return res.status(200).json({ htmlContent: htmlString });
+    console.log(formattedHtml);
+    return res.status(200).json({ htmlContent: formattedHtml });
   } catch (error) {
     console.log(error.message)
     return res.status(500).send(`An error occurred: ${error.message}`);

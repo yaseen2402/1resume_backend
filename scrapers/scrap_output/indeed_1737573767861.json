@@ -1,0 +1,17 @@
+{
+  "page": {
+    "title": "indeed.com",
+    "url": "chrome-error://chromewebdata/"
+  },
+  "banner": null,
+  "icon": null,
+  "jobTitle": null,
+  "company": null,
+  "viewAllJobsUrl": null,
+  "location": null,
+  "jobType": null,
+  "payRate": null,
+  "postedTime": null,
+  "jobDescription": null,
+  "shiftAndSchedule": []
+}
