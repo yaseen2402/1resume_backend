@@ -1,8 +1,7 @@
 const express = require('express');
 const{ admin, auth, db } = require('../firebaseAdmin');
-const scrapeJoraWebsite = require('../scrapers/indeed_scraper');
-const scrapeSeekWebsite = require('../scrapers/jora_scraper');
-const scrapeIndeedWebsite = require('../scrapers/seek_scraper');
+const {scrapeWebsite} = require('../scrapers/index'); 
+const { processResumeWithLLM } = require('../helperFunctions/llmService');
 
 const router = express.Router();
 
@@ -21,37 +20,39 @@ router.post('/scrape', async (req, res) => {
     const decodedToken = await auth.verifyIdToken(idToken.substring(7));
     const userId = decodedToken.uid;
 
-    let pageData;
-
-    if (jobPostUrl.includes('jora.com')) {
-      pageData = await scrapeJoraWebsite(jobPostUrl);
-    } else if (jobPostUrl.includes('seek.com')) {
-      pageData = await scrapeSeekWebsite(jobPostUrl);
-    } else if (jobPostUrl.includes('indeed.com')) {
-      pageData = await scrapeIndeedWebsite(jobPostUrl);
-    } else {
-      return res.status(400).send("Unsupported website.");
+    const pageData = await scrapeWebsite(jobPostUrl);
+    
+    if (!pageData) {
+      return res.status(500).send("Failed to scrape the website.");
     }
-
-    res.status(200).json({ success: true, data: pageData });
     
     const jobData = pageData;
-
+    
     // Find the most recent resume document
     const resumeSnapshot = await db.collection('users').doc(userId).collection('resumes')
       .orderBy('uploadedAt', 'desc').limit(1).get();
 
     if (!resumeSnapshot.empty) {
       const recentResumeRef = resumeSnapshot.docs[0].ref;
+      const resumeData = resumeSnapshot.docs[0].data();
+
+      const tailoredResume = await processResumeWithLLM(resumeData, jobData);
+
       await recentResumeRef.update({
-        scaredJobLink: jobPostUrl,
+        scraedJobLink: jobPostUrl,
         scrapedJobTitle: jobData.title,
         scrapedCompanyName: jobData.company,
         scrapedJobDescription: jobData.description,
         scrapedAt: admin.firestore.FieldValue.serverTimestamp(),
+        tailoredResumeHtml: tailoredResume
       });
     }
-    return res.status(200).send("Job post scraped and resume updated successfully.");
+
+    
+    return res.status(200).json({ 
+      success: true, 
+      data: pageData,
+      tailoredResume: tailoredResume });
   } catch (error) {
     return res.status(500).send(`An error occurred: ${error.message}`);
   }
