@@ -21,6 +21,7 @@ router.post('/scrape', async (req, res) => {
     const userId = decodedToken.uid;
 
     const pageData = await scrapeWebsite(jobPostUrl);
+    console.log(pageData);
     
     if (!pageData) {
       return res.status(500).send("Failed to scrape the website.");
@@ -32,14 +33,16 @@ router.post('/scrape', async (req, res) => {
     const resumeSnapshot = await db.collection('users').doc(userId).collection('resumes')
       .orderBy('uploadedAt', 'desc').limit(1).get();
 
+    let tailoredResume = null;
     if (!resumeSnapshot.empty) {
       const recentResumeRef = resumeSnapshot.docs[0].ref;
       const resumeData = resumeSnapshot.docs[0].data();
 
-      const tailoredResume = await processResumeWithLLM(resumeData, jobData);
+      tailoredResume = await processResumeWithLLM(resumeData, jobData);
+      console.log(tailoredResume);
 
       await recentResumeRef.update({
-        scraedJobLink: jobPostUrl,
+        scrapedJobLink: jobPostUrl,
         scrapedJobTitle: jobData.title,
         scrapedCompanyName: jobData.company,
         scrapedJobDescription: jobData.description,
@@ -51,7 +54,7 @@ router.post('/scrape', async (req, res) => {
     
     return res.status(200).json({ 
       success: true, 
-      data: pageData,
+      data: jobData,
       tailoredResume: tailoredResume });
   } catch (error) {
     return res.status(500).send(`An error occurred: ${error.message}`);

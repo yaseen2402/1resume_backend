@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
-const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const { scrapeSeekWebsite } = require('./seek_scraper');
@@ -13,27 +12,6 @@ const { scrapeJoraWebsite } = require('./jora_scraper');
 puppeteer.use(StealthPlugin());
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }));
 
-// Function to validate URL
-function isValidUrl(url) {
-  try {
-    new URL(url);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-
-// Create readline interface
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-// Promisify readline question
-const question = (query) => new Promise((resolve) => rl.question(query, resolve));
-
-// Sleep function using Promise
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Main scraping function
 async function scrapeWebsite(url) {
@@ -118,29 +96,6 @@ async function scrapeWebsite(url) {
   }
 }
 
-// Main execution
-(async () => {
-  try {
-    let url = await question('Enter website URL to scrape: ');
-    
-    // Add https:// if missing
-    if (!url.startsWith('http')) {
-      url = `https://${url}`;
-    }
-
-    // Validate URL
-    if (!isValidUrl(url)) {
-      throw new Error('Invalid URL format');
-    }
-
-    await scrapeWebsite(url);
-  } catch (error) {
-    console.error('Error:', error.message);
-  } finally {
-    rl.close();
-    process.exit(0);
-  }
-})();
 
 module.exports = {scrapeWebsite};
 
