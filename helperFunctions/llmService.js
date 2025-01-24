@@ -40,21 +40,31 @@ async function getTemplate() {
   }
   
   async function processWithGemini(resumeData, jobData, template) {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   
     const prompt = `
-      Use the following resume data and job posting to fill out this HTML template.
-      Make the resume highly relevant to the job posting while maintaining truthfulness.
+      Use the resume data and job posting to fill out this HTML template.
+      Return ONLY the raw HTML content without:
+      - Any markdown formatting
+      - Code blocks (\`\`\`)
+      - Explanations
+      - Extra text
       
+      Requirements:
+      1. Maintain original HTML structure from template
+      2. Only use the data from resume and job post
+      3. Return pure HTML that can be directly rendered
+
       Resume Data: ${JSON.stringify(resumeData)}
       Job Posting: ${JSON.stringify(jobData)}
       HTML Template: ${template}
-      
-      Return only the filled HTML template.`;
+    `;
   
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    return response.text();
+    return result.response.text()
+    .replace(/```html/g, '')
+    .replace(/```/g, '')
+    .trim();
   }
   
   async function processResumeWithLLM(resumeData, jobData, service = 'gemini') {
@@ -95,7 +105,10 @@ async function formatResumeContent(extractedContent) {
       Return only valid HTML.`;
 
     const result = await model.generateContent(prompt);
-    return result.response.text();
+    return result.response.text()
+    .replace(/```html/g, '')
+    .replace(/```/g, '')
+    .trim();
   } catch (error) {
     throw new Error(`LLM Processing failed: ${error.message}`);
   }
