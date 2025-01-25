@@ -50,7 +50,8 @@ async function processWithGemini(resumeData, jobData) {
            jobData.title
          } role at ${jobData.company}
          - Emphasize experience matching job requirements: ${jobData.description}
-         - Adjust summary/objective to align with job needs
+         - Adjust summary/objective to align with job needs:
+          * Write in first person perspective (use "I", "me", "my")
          - Keep unrelated content intact but de-emphasized
       3. OUTPUT REQUIREMENTS:
          - Return ONLY raw, complete HTML
