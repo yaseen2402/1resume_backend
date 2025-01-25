@@ -47,11 +47,12 @@ router.post('/upload-resume', upload.single('file'), async (req, res) => {
     }
 
     const extractedText = await extractTextFromPdf(req.file.buffer);
+    const formattedHtml = await formatResumeContent(extractedText);
 
     // Create a unique file name and upload to Firebase Storage
     const fileName = `${uuid.v4()}.pdf`;
     const filePath = `resumes/${userId}/${fileName}`;
-
+    
     const file = bucket.file(filePath);
     await file.save(req.file.buffer, {
       contentType: 'application/pdf'
@@ -63,11 +64,11 @@ router.post('/upload-resume', upload.single('file'), async (req, res) => {
     await db.collection('users').doc(userId).collection('resumes').add({
       originalResumeURL: pdfUrl,
       extractedText: extractedText,
+      formattedHtml: formattedHtml,
       uploadedAt: admin.firestore.FieldValue.serverTimestamp(),
     });
     console.log("stored in firestore")
     // const htmlString = await convertPDFToHTML(req.file.buffer);
-    const formattedHtml = await formatResumeContent(extractedText);
     console.log("got html string")
     console.log(formattedHtml);
     return res.status(200).json({ htmlContent: formattedHtml });
