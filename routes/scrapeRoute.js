@@ -43,21 +43,23 @@ router.post('/scrape', async (req, res) => {
 
       await recentResumeRef.update({
         scrapedJobLink: jobPostUrl,
-        scrapedJobTitle: jobData.title,
-        scrapedCompanyName: jobData.company,
-        scrapedJobDescription: jobData.description,
+        scrapedJobTitle: jobData.title || "not found",
+        scrapedCompanyName: jobData.company || "not found",
+        scrapedJobDescription: jobData.description || "not found",
         scrapedAt: admin.firestore.FieldValue.serverTimestamp(),
         tailoredResumeHtml: tailoredResume
       });
     }
-
-    
     return res.status(200).json({ 
       success: true, 
       data: jobData,
       tailoredResume: tailoredResume });
   } catch (error) {
-    return res.status(500).send(`An error occurred: ${error.message}`);
+    console.error("Scrape error:", error);
+    return res.status(500).json({  // Ensure JSON response for errors
+      success: false,
+      error: error.message || "Internal server error"
+    });
   }
 });
 

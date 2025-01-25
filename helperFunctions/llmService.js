@@ -8,7 +8,8 @@ const openai = new OpenAI({
   apiKey: 'aforapple'
 });
 
-const genAI = new GoogleGenerativeAI('AIzaSyB_1xpdJwxr409IPtqtpBFUr561ZWEaNCk');
+const genAI = new GoogleGenerativeAI('AIzaSyBh6Mc_h_P9HWRK9zR2o9a5Qhvl_M-FzvI');
+// const genAI = new GoogleGenerativeAI('AIzaSyB_1xpdJwxr409IPtqtpBFUr561ZWEaNCk');
 
 async function getTemplate() {
     const templatePath = path.join(__dirname, '../templates/temp1.html');
