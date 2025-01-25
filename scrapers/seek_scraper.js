@@ -140,7 +140,17 @@ async function scrapeSeekWebsite(url, browser) {
     console.log('Scraping succeeded!');
     console.log(`Results saved to: ${outputPath}`);
     
-    return pageData;
+    return {
+      title: pageData.jobTitle,       // Map jobTitle → title
+      company: pageData.company,      // Keep company
+      description: pageData.jobDescription, // Map jobDescription → description
+      location: pageData.location,
+      url: pageData.page.url,         // Use the actual URL (not job URL)
+      // Add other fields your route expects:
+      payRate: pageData.payRate,
+      postedTime: pageData.postedTime,
+      jobType: pageData.jobType
+    };
 }
 
 module.exports = { scrapeSeekWebsite };
