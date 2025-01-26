@@ -37,6 +37,7 @@ router.post('/scrape', async (req, res) => {
     if (!resumeSnapshot.empty) {
       const recentResumeRef = resumeSnapshot.docs[0].ref;
       const resumeData = resumeSnapshot.docs[0].data();
+      console.log("resumeData", resumeData);
 
       tailoredResume = await processResumeWithLLM(resumeData, jobData);
       console.log(tailoredResume);
@@ -55,7 +56,7 @@ router.post('/scrape', async (req, res) => {
       data: jobData,
       tailoredResume: tailoredResume });
   } catch (error) {
-    console.error("Scrape error:", error);
+    console.error("error in scrape route:", error);
     return res.status(500).json({  // Ensure JSON response for errors
       success: false,
       error: error.message || "Internal server error"

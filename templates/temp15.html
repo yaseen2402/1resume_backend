@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            background: #f0f5ff;
+            padding: 2rem;
+            margin: -1.5rem -1.5rem 2rem;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .contact-info {
+            color: #666;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding-left: 1rem;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            border-top: 2px solid #333;
+            margin-bottom: 12px;
+            padding-bottom: 4px;
+        }
+
+        .job {
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-weight: bold;
+        }
+
+        .job-company {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .uni-name {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .course-name {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .job-date {
+            float: right;
+            color: #000000;
+        }
+
+        .date-gpa-container {
+            float: right;
+            text-align: right;
+        }
+
+        .gpa {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 2px;
+        }
+
+        .uni-date {
+            display: block;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .project-name-1 {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .project-name-2 {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill {
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 15px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="name">Jane Doe</div>
+        <div class="contact-info">
+            📧 jane@email.com | 📱 (555) 123-4567<br>
+            📍 New York, NY | LinkedIn: linkedin.com/in/janedoe
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Professional Summary</div>
+        <p>
+            Senior Developer with 5+ years of experience in full-stack development.
+            Proven track record of delivering scalable SaaS solutions.
+        </p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Work Experience</div>
+        <div class="job">
+            <div class="job-title">
+                <span class="job-company">Tech Corp</span> |
+                <span class="job-position">Senior Developer</span>
+                <span class="job-date">2020 - Present</span>
+            </div>
+            <ul>
+                <li>Led team of 10 developers in SaaS platform development</li>
+                <li>Increased system efficiency by 40% through optimization</li>
+                <li>Implemented CI/CD pipeline reducing deployment time by 30%</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-title">
+                <span class="job-company">Digital Solutions</span> |
+                <span class="job-position">Full Stack Developer</span>
+                <span class="job-date">2018 - 2020</span>
+            </div>
+            <ul>
+                <li>Developed 15+ client-facing web applications</li>
+                <li>Migrated legacy systems to React/Node.js stack</li>
+                <li>Improved API response times by 60%</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Education</div>
+        <div class="uni">
+            <div class="uni-title">
+                <span class="uni-name">State University</span> |
+                <span class="course-name">B.S. Computer Science</span>
+                <div class="date-gpa-container">
+                    <span class="uni-date">2015 - 2019</span>
+                    <div class="gpa">GPA: 3.8/4.0</div>
+                </div>
+            </div>
+            <ul>
+                <li>Relevant Coursework: Algorithms, Database Systems, Web Development</li>
+                <li>Dean's List: Fall 2017, Spring 2018</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Projects</div>
+        <div class="project">
+            <div class="project-title-1">
+                <span class="project-name-1">E-commerce Platform</span>
+            </div>
+            <ul>
+                <li>Built using React/Node.js with Stripe integration</li>
+                <li>Handled 10k+ daily transactions</li>
+                <li>Reduced page load time by 45%</li>
+            </ul>
+        </div>
+
+        <div class="project">
+            <div class="project-title-2">
+                <span class="project-name-2">Inventory Management System</span>
+            </div>
+            <ul>
+                <li>Developed Python/Django backend with React frontend</li>
+                <li>Reduced stock discrepancies by 80%</li>
+                <li>Implemented barcode scanning functionality</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Skills</div>
+        <div class="skills">
+            <span class="skill">JavaScript/ES6+</span>
+            <span class="skill">React & Redux</span>
+            <span class="skill">Node.js</span>
+            <span class="skill">Python</span>
+            <span class="skill">AWS</span>
+            <span class="skill">Docker</span>
+            <span class="skill">SQL</span>
+            <span class="skill">Git</span>
+        </div>
+    </div>
+</body>
+</html>

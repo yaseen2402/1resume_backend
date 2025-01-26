@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const scrapeRoutes = require('./routes/scrapeRoute');
 const uploadResume = require('./routes/uploadResume');
-
+const history = require('./routes/history');
+const saveResme = require('./routes/saveResume');
+const createResme = require('./routes/createResume');
 const app = express();
 
 app.use(express.json());
@@ -14,6 +16,9 @@ app.use(cors({
 
 app.use('/api', scrapeRoutes);
 app.use('/api', uploadResume);
+app.use('/api', history);
+app.use('/api', saveResme);
+app.use.apply('/api', createResme);
 
 
 app.get('/', async (req, res)=>{

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS-Friendly Resume</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            line-height: 1.5;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 15px;
+            color: #333;
+        }
+
+        .resume-header {
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .name {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            font-size: 20px;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #bdc3c7;
+            margin-left: 10px;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 20px;
+        }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .company-name {
+            font-weight: bold;
+            color: #34495e;
+            font-size: 18px;
+        }
+
+        .date-range {
+            color: #7f8c8d;
+        }
+
+        .job-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .achievements {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .achievements li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .achievements li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .skill-category {
+            margin-bottom: 15px;
+        }
+
+        .skill-category h4 {
+            color: #34495e;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-item {
+            background-color: #f7f9fa;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 10px;
+            }
+
+            .section-header {
+                break-inside: avoid;
+            }
+
+            .experience-item, .education-item {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="resume-header">
+        <h1 class="name">John Doe</h1>
+        <div class="title">Senior Software Engineer</div>
+        <div class="contact-info">
+            <span class="contact-item">📧 john.doe@email.com</span>
+            <span class="contact-item">📱 (555) 123-4567</span>
+            <span class="contact-item">📍 San Francisco, CA</span>
+            <span class="contact-item">🔗 linkedin.com/in/johndoe</span>
+            <span class="contact-item">💻 github.com/johndoe</span>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-header">Professional Summary</h2>
+        <p>Results-driven Software Engineer with 8+ years of experience in full-stack development, cloud architecture, and team leadership. Specialized in developing scalable web applications and microservices using modern technologies. Proven track record of delivering high-impact projects and mentoring junior developers.</p>
+    </section>
+
+    <section class="section">
+        <h2 class="section-header">Professional Experience</h2>
+        
+        <div class="experience-item">
+            <div class="role-header">
+                <div class="company-name">Tech Solutions Inc.</div>
+                <div class="date-range">Jan 2020 - Present</div>
+            </div>
+            <div class="job-title">Senior Software Engineer</div>
+            <ul class="achievements">
+                <li>Led the development of a microservices-based platform serving 1M+ users, improving system reliability by 99.9%</li>
+                <li>Architected and implemented cloud-native solutions using AWS, reducing operational costs by 40%</li>
+                <li>Mentored team of 5 junior developers, implementing best practices and coding standards</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="role-header">
+                <div class="company-name">Innovation Labs</div>
+                <div class="date-range">Jun 2017 - Dec 2019</div>
+            </div>
+            <div class="job-title">Software Engineer</div>
+            <ul class="achievements">
+                <li>Developed and maintained RESTful APIs serving 500K+ daily requests</li>
+                <li>Implemented automated testing practices, increasing code coverage to 85%</li>
+                <li>Collaborated with product team to optimize user experience and reduce load times by 60%</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-header">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h4>Programming Languages</h4>
+                <div class="skill-list">
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">Java</span>
+                    <span class="skill-item">TypeScript</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4>Frameworks & Libraries</h4>
+                <div class="skill-list">
+                    <span class="skill-item">React</span>
+                    <span class="skill-item">Node.js</span>
+                    <span class="skill-item">Django</span>
+                    <span class="skill-item">Spring Boot</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4>Cloud & DevOps</h4>
+                <div class="skill-list">
+                    <span class="skill-item">AWS</span>
+                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">Kubernetes</span>
+                    <span class="skill-item">CI/CD</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-header">Education</h2>
+        <div class="education-item">
+            <div class="role-header">
+                <div class="company-name">University of Technology</div>
+                <div class="date-range">2013 - 2017</div>
+            </div>
+            <div class="job-title">Bachelor of Science in Computer Science</div>
+            <ul class="achievements">
+                <li>GPA: 3.8/4.0</li>
+                <li>Major: Computer Science, Minor: Mathematics</li>
+                <li>Relevant Coursework: Data Structures, Algorithms, Software Engineering, Database Systems</li>
+            </ul>
+        </div>
+    </section>
+</body>
+</html>
