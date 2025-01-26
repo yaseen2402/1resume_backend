@@ -1,264 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATS-Friendly Resume</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Resume</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 15px;
+      }
 
+      .header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .name {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .contact-info {
+        color: #666;
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        border-top: 2px solid #333;
+        margin-bottom: 12px;
+        padding-bottom: 4px;
+      }
+
+      .job {
+        margin-bottom: 15px;
+      }
+
+      .job-title {
+        font-weight: bold;
+      }
+
+      .job-company {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      .uni-name {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      .course-name {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      .job-date {
+        float: right;
+        color: #000000;
+      }
+      .date-gpa-container {
+        float: right;
+        text-align: right;
+      }
+
+      .gpa {
+        color: #666;
+        font-size: 0.9em;
+        margin-top: 2px;
+      }
+
+      .uni-date {
+        display: block; /* makes date appear above GPA */
+        color: #000000;
+        font-weight: bold; /* if you want dates bold */
+      }
+
+      .project-name-1 {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      .project-name-2 {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .skill {
+        background: #f0f0f0;
+        padding: 4px 8px;
+        border-radius: 3px;
+      }
+
+
+
+      ul {
+        margin: 0;
+        padding-left: 15px;
+      }
+
+      li {
+        margin-bottom: 4px;
+      }
+
+      @media print {
         body {
-            font-family: 'Calibri', 'Arial', sans-serif;
-            line-height: 1.5;
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 15px;
-            color: #333;
+          margin: 0;
+          padding: 15px !important; 
         }
 
-        .resume-header {
-            border-bottom: 2px solid #2c3e50;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+        /* Optional: Control page margins */
+        @page {
+          margin: 3px !important;
+          padding: 15px !important;
         }
-
-        .name {
-            font-size: 32px;
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-
-        .title {
-            font-size: 18px;
-            color: #7f8c8d;
-            margin-bottom: 12px;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 14px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .section {
-            margin-bottom: 25px;
-        }
-
-        .section-header {
-            font-size: 20px;
-            color: #2c3e50;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-header::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #bdc3c7;
-            margin-left: 10px;
-        }
-
-        .experience-item, .education-item {
-            margin-bottom: 20px;
-        }
-
-        .role-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .company-name {
-            font-weight: bold;
-            color: #34495e;
-            font-size: 18px;
-        }
-
-        .date-range {
-            color: #7f8c8d;
-        }
-
-        .job-title {
-            color: #2c3e50;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .achievements {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        .achievements li {
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .achievements li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #3498db;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .skill-category {
-            margin-bottom: 15px;
-        }
-
-        .skill-category h4 {
-            color: #34495e;
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
-
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .skill-item {
-            background-color: #f7f9fa;
-            padding: 4px 10px;
-            border-radius: 3px;
-            font-size: 14px;
-            color: #2c3e50;
-        }
-
-        @media print {
-            body {
-                margin: 0;
-                padding: 10px;
-            }
-
-            .section-header {
-                break-inside: avoid;
-            }
-
-            .experience-item, .education-item {
-                break-inside: avoid;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-    <header class="resume-header">
-        <h1 class="name">John Doe</h1>
-        <div class="title">Senior Software Engineer</div>
-        <div class="contact-info">
-            <span class="contact-item">📧 john.doe@email.com</span>
-            <span class="contact-item">📱 (555) 123-4567</span>
-            <span class="contact-item">📍 San Francisco, CA</span>
-            <span class="contact-item">🔗 linkedin.com/in/johndoe</span>
-            <span class="contact-item">💻 github.com/johndoe</span>
-        </div>
-    </header>
+  </head>
+  <body>
+    <div class="header">
+      <div class="name">Lawyer Template</div>
+      <div class="contact-info">
+        editme@lawfirm.com | (212) 555-1234<br />
+        New York, NY | LinkedIn: linkedin.com/in/editme
+      </div>
+    </div>
 
-    <section class="section">
-        <h2 class="section-header">Professional Summary</h2>
-        <p>Results-driven Software Engineer with 8+ years of experience in full-stack development, cloud architecture, and team leadership. Specialized in developing scalable web applications and microservices using modern technologies. Proven track record of delivering high-impact projects and mentoring junior developers.</p>
-    </section>
+    <div class="section">
+      <div class="section-title">Professional Summary</div>
+      <p>
+        Licensed attorney with 8+ years of experience in corporate law and litigation. 
+        Specializing in contract law, intellectual property, and mergers & acquisitions. 
+        Proven track record of successfully negotiating high-value contracts and 
+        representing clients in complex legal disputes.
+      </p>
+    </div>
 
-    <section class="section">
-        <h2 class="section-header">Professional Experience</h2>
-        
-        <div class="experience-item">
-            <div class="role-header">
-                <div class="company-name">Tech Solutions Inc.</div>
-                <div class="date-range">Jan 2020 - Present</div>
-            </div>
-            <div class="job-title">Senior Software Engineer</div>
-            <ul class="achievements">
-                <li>Led the development of a microservices-based platform serving 1M+ users, improving system reliability by 99.9%</li>
-                <li>Architected and implemented cloud-native solutions using AWS, reducing operational costs by 40%</li>
-                <li>Mentored team of 5 junior developers, implementing best practices and coding standards</li>
-            </ul>
+    <div class="section">
+      <div class="section-title">Professional Experience</div>
+      <div class="job">
+        <div class="job-title-1">
+          <span class="job-company-1">Smith & Partners LLP</span> |
+          <span class="job-position-1">Senior Associate Attorney</span>
+          <span class="job-date-1">Jan 2019 - Present</span>
         </div>
+        <ul>
+          <li>
+            Lead counsel for corporate clients in contract negotiations and dispute resolution
+          </li>
+          <li>Managed a portfolio of 50+ corporate clients with $10M+ in annual billings</li>
+          <li>Successfully argued 15+ cases in state and federal courts</li>
+          <li>Drafted and reviewed complex legal documents including M&A agreements</li>
+        </ul>
+      </div>
+      <br>
+      <div class="job">
+        <div class="job-title-2">
+          <span class="job-company-2">Johnson Legal Associates</span> |
+          <span class="job-position-2">Associate Attorney</span>
+          <span class="job-date-2">Aug 2014 - Dec 2018</span>
+        </div>
+        <ul>
+          <li>
+            Represented clients in civil litigation cases with 85% success rate
+          </li>
+          <li>Conducted legal research and drafted motions, briefs, and contracts</li>
+          <li>Advised clients on intellectual property rights and trademark protection</li>
+          <li>Managed discovery process and prepared witnesses for deposition</li>
+        </ul>
+      </div>
+    </div>
 
-        <div class="experience-item">
-            <div class="role-header">
-                <div class="company-name">Innovation Labs</div>
-                <div class="date-range">Jun 2017 - Dec 2019</div>
-            </div>
-            <div class="job-title">Software Engineer</div>
-            <ul class="achievements">
-                <li>Developed and maintained RESTful APIs serving 500K+ daily requests</li>
-                <li>Implemented automated testing practices, increasing code coverage to 85%</li>
-                <li>Collaborated with product team to optimize user experience and reduce load times by 60%</li>
-            </ul>
+    <div class="section">
+      <div class="section-title">Education</div>
+      <div class="uni">
+        <div class="uni-title">
+          <span class="uni-name">Harvard Law School</span> |
+          <span class="course-name">Juris Doctor</span>
+          <div class="date-gpa-container">
+            <span class="uni-date">2011 - 2014</span>
+            <div class="gpa">GPA: 3.85</div>
+          </div>
         </div>
-    </section>
+        <ul>
+          <li>Relevant Coursework: Constitutional Law, Corporate Law, Intellectual Property</li>
+          <li>Editor, Harvard Law Review</li>
+        </ul>
+      </div>
+    </div>
 
-    <section class="section">
-        <h2 class="section-header">Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h4>Programming Languages</h4>
-                <div class="skill-list">
-                    <span class="skill-item">Python</span>
-                    <span class="skill-item">JavaScript</span>
-                    <span class="skill-item">Java</span>
-                    <span class="skill-item">TypeScript</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h4>Frameworks & Libraries</h4>
-                <div class="skill-list">
-                    <span class="skill-item">React</span>
-                    <span class="skill-item">Node.js</span>
-                    <span class="skill-item">Django</span>
-                    <span class="skill-item">Spring Boot</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h4>Cloud & DevOps</h4>
-                <div class="skill-list">
-                    <span class="skill-item">AWS</span>
-                    <span class="skill-item">Docker</span>
-                    <span class="skill-item">Kubernetes</span>
-                    <span class="skill-item">CI/CD</span>
-                </div>
-            </div>
+    <div class="section">
+      <div class="section-title">Bar Admissions</div>
+      <div class="project">
+        <div class="project-title-1">
+          <span class="project-name-1">Licensed to Practice Law</span>
         </div>
-    </section>
+        <ul>
+          <li>New York State Bar (2015)</li>
+          <li>U.S. District Court, Southern District of New York (2016)</li>
+          <li>U.S. Court of Appeals, Second Circuit (2017)</li>
+        </ul>
+      </div>
+    </div>
 
-    <section class="section">
-        <h2 class="section-header">Education</h2>
-        <div class="education-item">
-            <div class="role-header">
-                <div class="company-name">University of Technology</div>
-                <div class="date-range">2013 - 2017</div>
-            </div>
-            <div class="job-title">Bachelor of Science in Computer Science</div>
-            <ul class="achievements">
-                <li>GPA: 3.8/4.0</li>
-                <li>Major: Computer Science, Minor: Mathematics</li>
-                <li>Relevant Coursework: Data Structures, Algorithms, Software Engineering, Database Systems</li>
-            </ul>
-        </div>
-    </section>
-</body>
+    <div class="section">
+      <div class="section-title">Professional Skills</div>
+      <div class="skills">
+        <span class="skill1">Contract Negotiation</span>
+        <span class="skill2">Litigation Strategy</span>
+        <span class="skill3">Legal Research</span>
+        <span class="skill4">Corporate Compliance</span>
+        <span class="skill5">Mergers & Acquisitions</span>
+        <span class="skill6">Intellectual Property Law</span>
+        <span class="skill7">Dispute Resolution</span>
+        <span class="skill8">Regulatory Compliance</span>
+      </div>
+    </div>
+  </body>
 </html>

@@ -19,10 +19,10 @@ async function scrapeIndeedWebsite(url, browser) {
     page.setDefaultNavigationTimeout(30000);
     
     // Create output directory
-    const outputDir = path.join(__dirname, 'scrap_output');
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
-    }
+    // const outputDir = path.join(__dirname, 'scrap_output');
+    // if (!fs.existsSync(outputDir)) {
+    //   fs.mkdirSync(outputDir);
+    // }
 
     const timestamp = Date.now();
 

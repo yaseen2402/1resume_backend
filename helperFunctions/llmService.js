@@ -18,7 +18,9 @@ async function getTemplate() {
 async function processWithOpenAI(resumeData, jobData, template) {
   const prompt = `
       Use the following resume data and job posting to fill out this HTML template.
-      Make the resume highly relevant to the job posting while maintaining truthfulness.
+      Make the resume highly relevant to the job posting while maintaining truthfulness.  
+      Do not change @media print CSS rules or any other existing styles.
+
       
       Resume Data: ${JSON.stringify(resumeData)}
       Job Posting: ${JSON.stringify(jobData)}
@@ -58,6 +60,8 @@ async function processWithGemini(resumeData, jobData) {
          - No markdown, backticks, or explanations
          - Ensure valid HTML syntax
          - Preserve original CSS classes and styling
+         - Do not change @media print CSS rules or any other existing styles.
+
        
       Existing Resume HTML:
       ${resumeData.formattedHtml}
@@ -68,10 +72,10 @@ async function processWithGemini(resumeData, jobData) {
 
   const result = await model.generateContent(prompt);
   return result.response
-    .text()
-    .replace(/```html/g, "")
-    .replace(/```/g, "")
-    .trim();
+    .text();
+    // .replace(/```html/g, "")
+    // .replace(/```/g, "")
+    // .trim();
 }
 
 async function processResumeWithLLM(resumeData, jobData, service = "gemini") {

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+        }
+        .accent-header {
+            background: #f0f5ff;
+            padding: 2rem;
+            margin: -1.5rem -1.5rem 2rem;
+        }
+        .name {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        .contact-bar {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .section {
+            margin: 2rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid #3498db;
+        }
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="accent-header">
+        <div class="name">Jane Doe</div>
+        <div class="contact-bar">
+            <span>📧 jane@email.com</span>
+            <span>📱 (555) 123-4567</span>
+            <span>📍 New York, NY</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Professional Experience</h2>
+        <div class="role-header">
+            <div><strong>Senior Developer</strong> | Tech Corp</div>
+            <div>2020-Present</div>
+        </div>
+        <ul>
+            <li>Led team of 10 developers in SaaS platform development</li>
+            <li>Increased system efficiency by 40% through optimization</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Technical Skills</h2>
+        <div class="skill-grid">
+            <span>Python</span>
+            <span>React</span>
+            <span>AWS</span>
+            <span>SQL</span>
+            <span>Docker</span>
+        </div>
+    </div>
+</body>
+</html>
